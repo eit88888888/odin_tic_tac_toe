@@ -28,7 +28,7 @@ const gameObj = {
       
       
      } else {
-        console.log("Already taken, try again!")
+        console.log("Already taken, try again!");
       }
     },
 
@@ -43,7 +43,7 @@ const gameObj = {
       let moves = 0;
       while (moves < 9) {
         this.displayBoard();
-        const promtPosition = prompt(`Player ${this.game.currentPlayer}, enter 0-8:`);
+        // const promtPosition = prompt(`Player ${this.game.currentPlayer}, enter 0-8:`);
         if (this.makeMove(promtPosition)) {
           return;
         }

@@ -3,9 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
+    <h1>Tic-Tac-Toe</h1>
+    <div class="game-container">
+        <div data-cell-index="0" class="cell none-border-top none-border-left"></div>
+        <div data-cell-index="1" class="cell none-border-top"></div>
+        <div data-cell-index="2" class="cell none-border-top none-border-right"></div>
+        <div data-cell-index="3" class="cell none-border-left"></div>
+        <div data-cell-index="4" class="cell"></div>
+        <div data-cell-index="5" class="cell none-border-right"></div>
+        <div data-cell-index="6 " class="cell none-border-bottom none-border-left"></div>
+        <div data-cell-index="7 " class="cell none-border-bottom"></div>
+        <div data-cell-index="8 " class="cell none-border-bottom none-border-right"></div>
+    </div>
+
+    <p>Player 1 wins!</p>
+    <button class="start-btn">Start/Restart</button>
 
     <script src="app.js"></script>
 </body>
