@@ -1,34 +1,47 @@
 const gameObj = {
     gameboard: ['', '', '', '', '', '', '', '', ''],
     game: {
-      winCombination: [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [2, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]],
+      winCombination: [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]],
       currentPlayer: "X"
     },
-    player1: {},
-    player2: {},
+     gameEnded: false,
 
     displayBoard: function() {
-      console.log(this.gameboard.slice(0, 3));
-      console.log(this.gameboard.slice(3, 6));
-      console.log(this.gameboard.slice(6, 9));
+      this.gameboard.forEach((cell, index) => {
+        const cellDiv = document.querySelector(`[data-cell-index="${index}"]`);
+        if (cellDiv) {
+          cellDiv.textContent = cell;
+        }
+      });
     },
 
     makeMove: function(position) {
+      if (this.gameEnded) {
+        return;
+      }
+
       if (this.gameboard[position] === '') {
         this.gameboard[position] = this.game.currentPlayer;
 
-      if (this.checkWin()) {
-        console.log(`${this.game.currentPlayer} wins`);
-        this.displayBoard();
-        return true;
-      }
+        if (this.checkWin()) {
+          document.querySelector('p').textContent = `${this.game.currentPlayer} wins!`;
+          this.displayBoard();
+          this.gameEnded = true;
+          return true;
+        }
 
-      this.game.currentPlayer = this.game.currentPlayer === "X" ? "O" : "X";
-      return false;
-      
-      
-     } else {
-        console.log("Already taken, try again!");
+        if (this.gameboard.every(cell => cell !== '')) {
+          document.querySelector('p').textContent = 'Draw';
+          this.displayBoard();
+          this.gameEnded = true;
+          return true; 
+        }
+
+        this.game.currentPlayer = this.game.currentPlayer === "X" ? "O" : "X";
+        this.displayBoard();
+        return false;
+      } else {
+        document.querySelector('p').textContent = 'Already taken, try again!';
       }
     },
 
@@ -39,19 +52,28 @@ const gameObj = {
       });
     },
 
-    playGame: function() {
-      let moves = 0;
-      while (moves < 9) {
-        this.displayBoard();
-        // const promtPosition = prompt(`Player ${this.game.currentPlayer}, enter 0-8:`);
-        if (this.makeMove(promtPosition)) {
-          return;
-        }
-        moves++
-      }
-      console.log('Draw');
+    resetGame: function() {
+      this.gameboard.fill('');
+      this.game.currentPlayer = "X";
+      this.gameEnded = false;
+      this.displayBoard();
+      document.querySelector('p').textContent = '';
+    },
+
+    initialize: function() {
+      const cells = document.querySelectorAll('.cell');
+      cells.forEach(cell => {
+        cell.addEventListener('click', () => {
+          const position = cell.getAttribute('data-cell-index');
+          if (!this.makeMove(position)) {
+            return;
+          }
+        });
+      });
+
+      document.querySelector('.start-btn').addEventListener('click', () => this.resetGame());
       this.displayBoard();
     }
 }
 
-gameObj.playGame();
+gameObj.initialize();
